@@ -14,6 +14,8 @@ api_key = os.getenv("API_KEY")
 st.markdown('# 📝 **VernLearn**')
 bar = st.progress(0)
 
+# https://www.youtube.com/watch?v=c2Sn-pP3uxo
+
 # Custom functions 
 
 # 2. Retrieving audio file from YouTube video
@@ -100,6 +102,7 @@ def transcribe_yt():
 
     englishText = transcript_output_response.json()["text"]
     englishText = str(englishText)
+    english = translator.translate(englishText, dest='en')
     hindi = translator.translate(englishText, dest='hi')
     bengali = translator.translate(englishText, dest='bn')
     tamil = translator.translate(englishText, dest='ta')
@@ -109,60 +112,71 @@ def transcribe_yt():
     marathi = translator.translate(englishText, dest='mr')
     urdu = translator.translate(englishText, dest='ur')
     
-    # option = st.selectbox(
-    #     'Select language?',
-    #     ('English', 'Hindi'))
-    # st.write('You selected:', option)
+    selectedLang = ""
 
-    st.header('Output English')
-    st.success(englishText)
-    st.header('Output Hindi')
-    st.info(hindi.text)
-    st.header('Output Bengali')
-    st.success(bengali.text)
-
-    st.header('Output Tamil')
-    st.info(tamil.text)
-    st.header('Output Telugu')
-    st.success(telugu.text)
-    st.header('Output Gujrati')
-    st.info(gujrati.text)
-
-    st.header('Output Malayalam')
-    st.success(malayalam.text)
-    st.header('Output Marathi')
-    st.info(marathi.text)
-    st.header('Output Urdu')
-    st.success(urdu.text)
+    if option == 'English':
+        st.header('Output English')
+        st.success(english.text)
+        selectedLang = english.text
+    elif option == 'Hindi':
+        st.header('Output Hindi')
+        st.info(hindi.text)
+        selectedLang = hindi.text
+    elif option == 'Bengali':
+        st.header('Output Bengali')
+        st.success(bengali.text)
+        selectedLang = bengali.text
+    elif option == 'Tamil':
+        st.header('Output Tamil')
+        st.info(tamil.text)
+        selectedLang = tamil.text
+    elif option == 'Telugu':
+        st.header('Output Telugu')
+        st.success(telugu.text)
+        selectedLang = telugu.text
+    elif option == 'Gujrati':
+        st.header('Output Gujrati')
+        st.info(gujrati.text)
+        selectedLang = gujrati.text
+    elif option == 'Malayalam':
+        st.header('Output Malayalam')
+        st.success(malayalam.text)
+        selectedLang = malayalam.text
+    elif option == 'Marathi':
+        st.header('Output Marathi')
+        st.info(marathi.text)
+        selectedLang = marathi.text
+    elif option == 'Urdu':
+        st.header('Output Urdu')
+        st.success(urdu.text)
+        selectedLang = urdu.text
 
 
     # 8. Save transcribed text to file
 
     # Save as TXT file
-    yt_txt = open('yt.txt', 'w')
-    yt_txt.write(transcript_output_response.json()["text"])
+    yt_txt = open('yt.txt', 'w', encoding="utf-8")
+    yt_txt.write(selectedLang)
     yt_txt.close()
 
-    # Save as SRT file
-    srt_endpoint = endpoint + "/srt"
-    srt_response = requests.get(srt_endpoint, headers=headers)
-    with open("yt.srt", "w") as _file:
-        _file.write(srt_response.text)
-    
     zip_file = ZipFile('transcription.zip', 'w')
     zip_file.write('yt.txt')
-    zip_file.write('yt.srt')
     zip_file.close()
 
 
-st.warning('Awaiting URL input in the sidebar.')
-
 # Sidebar
 st.sidebar.header('Input parameter')
-
+option = st.sidebar.selectbox(
+    'Select language?',
+    ('English', 'Hindi', 'Bengali', 'Tamil', 'Telugu', 'Gujrati', 'Malayalam',
+    'Marathi', 'Urdu'))
+st.write('Language selected:', option)
 with st.sidebar.form(key='my_form'):
 	URL = st.text_input('Enter URL of YouTube video:')
 	submit_button = st.form_submit_button(label='Go')
+
+
+st.warning('Awaiting URL input in the sidebar.')
 
 # Run custom functions if URL is entered
 if submit_button:
