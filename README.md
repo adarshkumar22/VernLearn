@@ -7,7 +7,7 @@ To recreate this web app on your own computer, do the following.
 
 ### Obtain the AssemblyAI API key
 
-Obtain your free [AssemblyAI API key](https://www.assemblyai.com/?utm_source=youtube&utm_medium=social&utm_campaign=dataprofessor).
+Obtain your free [AssemblyAI API key](https://www.assemblyai.com/dashboard/signup).
 Create a .env file and add the AssesmblyAI API key in the .env file
 ```
 API_KEY = Your_api_key
