@@ -5,6 +5,7 @@ import requests
 from zipfile import ZipFile
 from googletrans import Translator
 from dotenv import load_dotenv
+from summa import summarizer
 
 translator = Translator()
 
@@ -14,7 +15,12 @@ api_key = os.getenv("API_KEY")
 st.markdown('# 📝 **VernLearn**')
 bar = st.progress(0)
 
-# https://www.youtube.com/watch?v=c2Sn-pP3uxo
+ratio = st.slider(
+    "Summarization fraction", min_value=0.0, max_value=1.0, value=0.2, step=0.01
+)
+
+# 5 minute https://www.youtube.com/watch?v=c2Sn-pP3uxo
+# 20 secon https://www.youtube.com/watch?v=0VLxWIHRD4E
 
 # Custom functions 
 
@@ -98,10 +104,17 @@ def transcribe_yt():
     bar.progress(100)
 
     # 7. Print transcribed text
-    
-
     englishText = transcript_output_response.json()["text"]
     englishText = str(englishText)
+
+    summarized_list = summarizer.summarize(
+        englishText, ratio=ratio, language="english", split=True, scores=True
+    )
+
+    summarized_text = ""
+    for i in summarized_list:
+        summarized_text = summarized_text + i[0] + " "
+    
     english = translator.translate(englishText, dest='en')
     hindi = translator.translate(englishText, dest='hi')
     bengali = translator.translate(englishText, dest='bn')
@@ -111,44 +124,72 @@ def transcribe_yt():
     malayalam = translator.translate(englishText, dest='ml')
     marathi = translator.translate(englishText, dest='mr')
     urdu = translator.translate(englishText, dest='ur')
+
+    senglish = translator.translate(summarized_text, dest='en')
+    shindi = translator.translate(summarized_text, dest='hi')
+    sbengali = translator.translate(summarized_text, dest='bn')
+    stamil = translator.translate(summarized_text, dest='ta')
+    stelugu = translator.translate(summarized_text, dest='te')
+    sgujrati = translator.translate(summarized_text, dest='gu')
+    smalayalam = translator.translate(summarized_text, dest='ml')
+    smarathi = translator.translate(summarized_text, dest='mr')
+    surdu = translator.translate(summarized_text, dest='ur')
     
     selectedLang = ""
 
     if option == 'English':
         st.header('Output English')
         st.success(english.text)
+        st.header('Summary')
+        st.info(senglish.text)
         selectedLang = english.text
     elif option == 'Hindi':
         st.header('Output Hindi')
         st.info(hindi.text)
+        st.header('Summary')
+        st.success(shindi.text)
         selectedLang = hindi.text
     elif option == 'Bengali':
         st.header('Output Bengali')
         st.success(bengali.text)
+        st.header('Summary')
+        st.info(sbengali.text)
         selectedLang = bengali.text
     elif option == 'Tamil':
         st.header('Output Tamil')
         st.info(tamil.text)
+        st.header('Summary')
+        st.success(stamil.text)
         selectedLang = tamil.text
     elif option == 'Telugu':
         st.header('Output Telugu')
         st.success(telugu.text)
+        st.header('Summary')
+        st.info(stelugu.text)
         selectedLang = telugu.text
     elif option == 'Gujrati':
         st.header('Output Gujrati')
         st.info(gujrati.text)
+        st.header('Summary')
+        st.success(sgujrati.text)
         selectedLang = gujrati.text
     elif option == 'Malayalam':
         st.header('Output Malayalam')
         st.success(malayalam.text)
+        st.header('Summary')
+        st.info(smalayalam.text)
         selectedLang = malayalam.text
     elif option == 'Marathi':
         st.header('Output Marathi')
         st.info(marathi.text)
+        st.header('Summary')
+        st.success(smarathi.text)
         selectedLang = marathi.text
     elif option == 'Urdu':
         st.header('Output Urdu')
         st.success(urdu.text)
+        st.header('Summary')
+        st.info(surdu.text)
         selectedLang = urdu.text
 
 
@@ -166,14 +207,21 @@ def transcribe_yt():
 
 # Sidebar
 st.sidebar.header('Input parameter')
+
 option = st.sidebar.selectbox(
-    'Select language?',
+    'Select output language?',
     ('English', 'Hindi', 'Bengali', 'Tamil', 'Telugu', 'Gujrati', 'Malayalam',
     'Marathi', 'Urdu'))
 st.write('Language selected:', option)
+
 with st.sidebar.form(key='my_form'):
 	URL = st.text_input('Enter URL of YouTube video:')
 	submit_button = st.form_submit_button(label='Go')
+
+st.sidebar.header('Made By-')
+st.sidebar.write('Shubham Sharma')
+st.sidebar.write('Nikhil Kumar')
+st.sidebar.write('Adarsh Kumar')
 
 
 st.warning('Awaiting URL input in the sidebar.')
