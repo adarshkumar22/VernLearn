@@ -1,6 +1,19 @@
 # VernLearn
 Traditionally, a lot of challenges are faced by vernacular-medium students as compared to English-medium students, in terms of learning, opportunities and overall personality development. Hence, in line with the new National Education Policy 2020 promulgated by GoI, it is the need of the hour to bridge the above gaps faced by Indian students using disruptive technology solutions like NLP.
 
+## Technologies used
+### Frontend
+- Streamlit library
+### Backend
+- Python
+- AssesmblyAI API's
+
+## Libraries used
+- streamlit 
+- pytube 
+- zipfile 
+- googletrans 
+- summa 
 
 ## Running VernLearn as a Streamlit app
 To recreate this web app on your own computer, do the following.
