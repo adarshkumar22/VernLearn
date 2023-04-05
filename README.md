@@ -28,9 +28,5 @@ pip install -r requirements.txt
 ```
 streamlit run app.py
 ```
-## Data flow daigram
-Soon
-
 ## Output
-
-<img src="/Images/screen-capture_out.gif" />
+![screen-capture_out](https://user-images.githubusercontent.com/71789479/229980943-3873e86b-7e8b-48ff-9f1c-7914c9a440e6.gif)
