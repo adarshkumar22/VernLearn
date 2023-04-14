@@ -115,25 +115,33 @@ def transcribe_yt():
     for i in summarized_list:
         summarized_text = summarized_text + i[0] + " "
     
-    english = translator.translate(englishText, dest='en')
-    hindi = translator.translate(englishText, dest='hi')
-    bengali = translator.translate(englishText, dest='bn')
-    tamil = translator.translate(englishText, dest='ta')
-    telugu = translator.translate(englishText, dest='te')
-    gujrati = translator.translate(englishText, dest='gu')
-    malayalam = translator.translate(englishText, dest='ml')
-    marathi = translator.translate(englishText, dest='mr')
-    urdu = translator.translate(englishText, dest='ur')
-
-    senglish = translator.translate(summarized_text, dest='en')
-    shindi = translator.translate(summarized_text, dest='hi')
-    sbengali = translator.translate(summarized_text, dest='bn')
-    stamil = translator.translate(summarized_text, dest='ta')
-    stelugu = translator.translate(summarized_text, dest='te')
-    sgujrati = translator.translate(summarized_text, dest='gu')
-    smalayalam = translator.translate(summarized_text, dest='ml')
-    smarathi = translator.translate(summarized_text, dest='mr')
-    surdu = translator.translate(summarized_text, dest='ur')
+    if(option == 'English'):
+        english = translator.translate(englishText, dest='en')
+        senglish = translator.translate(summarized_text, dest='en')
+    elif(option == 'Hindi'):
+        hindi = translator.translate(englishText, dest='hi')
+        shindi = translator.translate(summarized_text, dest='hi')
+    elif(option == 'Bengali'):
+        bengali = translator.translate(englishText, dest='bn')
+        sbengali = translator.translate(summarized_text, dest='bn')
+    elif(option == 'Tamil'):
+        tamil = translator.translate(englishText, dest='ta')
+        stamil = translator.translate(summarized_text, dest='ta')
+    elif(option == 'Telugu'):
+        telugu = translator.translate(englishText, dest='te')
+        stelugu = translator.translate(summarized_text, dest='te')
+    elif(option == 'Gujrati'):
+        gujrati = translator.translate(englishText, dest='gu')
+        sgujrati = translator.translate(summarized_text, dest='gu')
+    elif(option == 'Malayalam'):
+        malayalam = translator.translate(englishText, dest='ml')
+        smalayalam = translator.translate(summarized_text, dest='ml')
+    elif(option == 'Marathi'):
+        marathi = translator.translate(englishText, dest='mr')
+        smarathi = translator.translate(summarized_text, dest='mr')
+    elif(option == 'Urdu'):
+        urdu = translator.translate(englishText, dest='ur')
+        surdu = translator.translate(summarized_text, dest='ur')
     
     selectedLang = ""
 
@@ -191,7 +199,6 @@ def transcribe_yt():
         st.header('Summary')
         st.info(surdu.text)
         selectedLang = urdu.text
-
 
     # 8. Save transcribed text to file
 
