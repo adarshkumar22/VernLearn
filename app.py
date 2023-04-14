@@ -10,7 +10,8 @@ from summa import summarizer
 translator = Translator()
 
 load_dotenv()
-api_key = os.getenv("API_KEY")
+# api_key = os.getenv("API_KEY")
+api_key = "bf5c2c11c6734283bbe513d01a0e8cee"
 
 st.markdown('# 📝 **VernLearn**')
 bar = st.progress(0)
