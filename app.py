@@ -4,12 +4,12 @@ import os
 import requests
 from zipfile import ZipFile
 from googletrans import Translator
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from summa import summarizer
 
 translator = Translator()
 
-load_dotenv()
+# load_dotenv()
 # api_key = os.getenv("API_KEY")
 api_key = "bf5c2c11c6734283bbe513d01a0e8cee"
 
